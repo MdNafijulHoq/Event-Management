@@ -8,7 +8,9 @@ const EventStore = create((set) => ({
 
   getEvent: async () => {
     try {
-      let response = await axios.get("/eventmanagement/api/GetEvent");
+      let response = await axios.get(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/GetEvent"
+      );
       if (response.data.status === "success") {
         set({ Event: response.data.data });
       }
@@ -20,7 +22,7 @@ const EventStore = create((set) => ({
   createEvent: async (formData) => {
     try {
       let response = await axios.post(
-        "/eventmanagement/api/CreateEvent",
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/CreateEvent",
         formData
       );
       if (response.data.status === "success") {
@@ -36,7 +38,9 @@ const EventStore = create((set) => ({
 
   getEventByUser: async () => {
     try {
-      let response = await axios.get("/eventmanagement/api/EventByUser");
+      let response = await axios.get(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/EventByUser"
+      );
       if (response.data.status === "success") {
         set({ Event: response.data.data });
       }
@@ -48,7 +52,7 @@ const EventStore = create((set) => ({
   GetEventDetailsByID: async (id) => {
     try {
       let response = await axios.get(
-        `/eventmanagement/api/GetEventDetailsByID/${id}`
+        `https://event-management-server-gamma.vercel.app/eventmanagement/api/GetEventDetailsByID/${id}`
       );
       if (response.data.status === "success") {
         return response.data.data[0];
@@ -61,7 +65,7 @@ const EventStore = create((set) => ({
   updateEvent: async (id, formData) => {
     try {
       let response = await axios.put(
-        `/eventmanagement/api/UpdateEvent/${id}`,
+        `https://event-management-server-gamma.vercel.app/eventmanagement/api/UpdateEvent/${id}`,
         formData
       );
       console.log("Update Event Data", response);
@@ -92,7 +96,7 @@ const EventStore = create((set) => ({
 
       if (result.isConfirmed) {
         let response = await axios.delete(
-          `/eventmanagement/api/EventDelete/${id}`
+          `https://event-management-server-gamma.vercel.app/eventmanagement/api/EventDelete/${id}`
         );
         if (response.data.data?.deletedCount > 0) {
           await Swal.fire({
@@ -113,7 +117,7 @@ const EventStore = create((set) => ({
   joinEvent: async (eventId) => {
     try {
       let response = await axios.post(
-        `/eventmanagement/api/JoinEvent/${eventId}`
+        `https://event-management-server-gamma.vercel.app/eventmanagement/api/JoinEvent/${eventId}`
       );
       if (response.data.status === "success") {
         set((state) => ({
@@ -136,10 +140,12 @@ const EventStore = create((set) => ({
       return false;
     }
   },
-  
+
   searchEvents: async (searchTerm) => {
     try {
-      let response = await axios.get(`/eventmanagement/api/search?searchTerm=${searchTerm}`);
+      let response = await axios.get(
+        `https://event-management-server-gamma.vercel.app/eventmanagement/api/search?searchTerm=${searchTerm}`
+      );
       if (response.data.status === "success") {
         set({ Event: response.data.data });
       }
@@ -151,12 +157,15 @@ const EventStore = create((set) => ({
   filterEvents: async (filterType, startDate, endDate) => {
     try {
       let params = { filterType };
-      if (filterType === 'customRange') {
+      if (filterType === "customRange") {
         params.startDate = startDate;
         params.endDate = endDate;
       }
-      
-      let response = await axios.get('/eventmanagement/api/filter', { params });
+
+      let response = await axios.get(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/filter",
+        { params }
+      );
       if (response.data.status === "success") {
         set({ Event: response.data.data });
       }
@@ -167,14 +176,16 @@ const EventStore = create((set) => ({
 
   resetEvents: async () => {
     try {
-      let response = await axios.get('/eventmanagement/api/GetEvent');
+      let response = await axios.get(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/GetEvent"
+      );
       if (response.data.status === "success") {
         set({ Event: response.data.data });
       }
     } catch (error) {
       console.log(error.message);
     }
-  }
+  },
 }));
 
 export default EventStore;

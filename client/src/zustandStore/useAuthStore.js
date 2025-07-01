@@ -11,7 +11,7 @@ const AuthStore = create((set) => ({
     set({ isAuthChecking: true });
     try {
       let response = await axios.get(
-        "/eventmanagement/api/CheckingLoggedInUser"
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/CheckingLoggedInUser"
       );
       if (response.data.status === "success") {
         set({ AuthUser: response.data.data });
@@ -29,7 +29,10 @@ const AuthStore = create((set) => ({
   getAuthSignUp: async (data) => {
     set({ isLoading: true });
     try {
-      let response = await axios.post("/eventmanagement/api/UserSignUp", data);
+      let response = await axios.post(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/UserSignUp",
+        data
+      );
       if (response.data.status === "success") {
         toast.success("User created successfully");
         set({ AuthUser: response.data.data });
@@ -45,7 +48,10 @@ const AuthStore = create((set) => ({
   getAuthSignIn: async (data) => {
     set({ isLoading: true });
     try {
-      let response = await axios.post("/eventmanagement/api/UserSignIn", data);
+      let response = await axios.post(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/UserSignIn",
+        data
+      );
       if (response.data.status === "success") {
         toast.success("User Login successful");
         set({ AuthUser: response.data.data });
@@ -60,7 +66,9 @@ const AuthStore = create((set) => ({
 
   LogOutUser: async () => {
     try {
-      let response = await axios.get("/eventmanagement/api/UserLogOut");
+      let response = await axios.get(
+        "https://event-management-server-gamma.vercel.app/eventmanagement/api/UserLogOut"
+      );
       if (response.data.status === "success") {
         set({ AuthUser: null });
         toast.success("Logout User");
